@@ -1,8 +1,8 @@
 // $(document).ready(function(){
 
-  var evalArr = [];
+  var inputArr = [];
   var oper = '';
-  var evalPlaceholder = 0;
+  var tmpResult = 0;
 
   var screen = $('#screen');
   var span = $('span');
@@ -16,34 +16,34 @@
     screen.append(eventTarget);
     if(eventTarget === "C"){
       screen.empty();
-      evalArr = [];
+      inputArr = [];
       oper = '';
       return;
     }
     else if(eventTarget === '='){
       screen.empty();
-      screen.append(evaluate(evalArr, oper));
+      screen.append(evaluate(inputArr, oper));
     }
-    else if (eventTarget === '-' && evalArr.length < 1 && oper === '') {
-      evalArr[0] = eventTarget;
+    else if (eventTarget === '-' && inputArr.length < 1 && oper === '') {
+      inputArr[0] = eventTarget;
     }
-    else if(evalArr.length < 1 && parseInt(eventTarget) == eventTarget && oper === ''){
-      evalArr[0] = eventTarget;
+    else if(inputArr.length < 1 && parseInt(eventTarget) == eventTarget && oper === ''){
+      inputArr[0] = eventTarget;
     }
-    else if(evalArr.length === 1 && parseInt(eventTarget) == eventTarget && oper === ''){
-      evalArr[0] += eventTarget;
+    else if(inputArr.length === 1 && parseInt(eventTarget) == eventTarget && oper === ''){
+      inputArr[0] += eventTarget;
     }
     else if (oper === '' && parseInt(eventTarget) != eventTarget) {
       oper = eventTarget;
     }
-    else if (evalArr.length === 1 && oper != '') {
-      evalArr[1] = eventTarget
+    else if (inputArr.length === 1 && oper != '') {
+      inputArr[1] = eventTarget
     }
-    else if (evalArr.length === 2 && oper != '') {
-      evalArr[1] += eventTarget;
+    else if (inputArr.length === 2 && oper != '') {
+      inputArr[1] += eventTarget;
     }
     console.log(oper);
-    console.log(evalArr);
+    console.log(inputArr);
   });
 
 function evaluate (arr, char) {
@@ -54,28 +54,28 @@ function evaluate (arr, char) {
       return 'ERROR'
     }
     else if(char === 'x'){
-      evalPlaceholder = num1 * num2;
+      tmpResult = num1 * num2;
     }
     else if(char === '÷'){
-      evalPlaceholder = num1 / num2;
+      tmpResult = num1 / num2;
     }
     else if(char === '+'){
-      evalPlaceholder = num1 + num2;
+      tmpResult = num1 + num2;
     }
     else if(char === '-'){
-      evalPlaceholder = num1 - num2;
+      tmpResult = num1 - num2;
     }
     else {
       return 'ERROR'
     }
     resultShow();
-    return evalPlaceholder.toFixed(5)
+    return tmpResult
   };
 
   function resultShow (){
     oper = '';
-    evalArr[0] = evalPlaceholder;
-    evalArr.splice(1,1);
+    inputArr[0] = tmpResult;
+    inputArr.splice(1,1);
   };
 
 // });
