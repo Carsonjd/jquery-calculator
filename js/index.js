@@ -1,4 +1,4 @@
-$(document).ready(function(){
+// $(document).ready(function(){
 
   var evalArr = [];
   var oper = '';
@@ -13,7 +13,7 @@ $(document).ready(function(){
 
   span.on('click', function(event){
     var eventTarget = $(event.target).text();
-    console.log(eventTarget)
+    screen.append(eventTarget);
     if(eventTarget === "C"){
       screen.empty();
       evalArr = [];
@@ -22,47 +22,67 @@ $(document).ready(function(){
     }
     else if(eventTarget === '='){
       screen.empty();
-      screen.append(evaluate(evalArr));
-      return;
+      screen.append(evaluate(evalArr, oper));
     }
-    else if(evalArr.length === 0){
-      evalArr.push(parseInt(eventTarget))
-      screen.append(eventTarget);
+    else if (eventTarget === '-' && evalArr.length < 1 && oper === '') {
+      evalArr[0] = eventTarget;
     }
-    else if (oper === '') {
-      oper = eventTarget
-      screen.append(eventTarget);
+    else if(evalArr.length < 1 && parseInt(eventTarget) == eventTarget && oper === ''){
+      evalArr[0] = eventTarget;
     }
-    else if (evalArr.length === 1) {
-      evalArr.push(parseInt(eventTarget))
-      console.log(evalArr)
-      evaluate(evalArr);
+    else if(evalArr.length === 1 && parseInt(eventTarget) == eventTarget && oper === ''){
+      evalArr[0] += eventTarget;
+    }
+    else if (oper === '' && parseInt(eventTarget) != eventTarget) {
+      oper = eventTarget;
+    }
+    else if (evalArr.length === 1 && oper != '') {
+      evalArr[1] = eventTarget
+    }
+    else if (evalArr.length === 2 && oper != '') {
+      evalArr[1] += eventTarget;
     }
   });
 
-  var evaluate = function(arr){
+function evaluate (arr, char) {
     screen.empty();
-    if(oper === 'x'){
-      evalPlaceholder = arr[0] * arr[1];
+    var num1 = parseInt(arr[0])
+    var num2 = parseInt(arr[1])
+    if(char === 'x'){
+      evalPlaceholder = num1 * num2;
     }
-    if(oper === '÷'){
-      evalPlaceholder = arr[0] / arr[1];
+    else if(char === '÷'){
+      evalPlaceholder = num1 / num2;
     }
-    if(oper === '+'){
-      evalPlaceholder = arr[0] + arr[1];
+    else if(char === '+'){
+      evalPlaceholder = num1 + num2;
     }
-    if(oper === '-'){
-      evalPlaceholder = arr[0] - arr[1];
+    else if(char === '-'){
+      evalPlaceholder = num1 - num2;
     }
-    screen.append(evalPlaceholder);
-    console.log(evalPlaceholder)
+    else if(char === 'x-'){
+      evalPlaceholder = num1 * num2;
+    }
+    else if(char === '÷-'){
+      evalPlaceholder = num1 / num2;
+    }
+    else if(char === '+-'){
+      evalPlaceholder = num1 + num2;
+    }
+    else if(char === '--'){
+      evalPlaceholder = num1 - num2;
+    }
+    else {
+      evalPlaceholder = 'ERROR'
+    }
+    resultShow();
+    return evalPlaceholder
+  };
+
+  function resultShow (){
     oper = '';
-    arr[0] = evalPlaceholder;
-    arr.splice(1,1);
-  }
+    evalArr[0] = evalPlaceholder;
+    evalArr.splice(1,1);
+  };
 
-
-
-
-
-});
+// });
