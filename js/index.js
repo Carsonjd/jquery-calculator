@@ -42,13 +42,18 @@
     else if (evalArr.length === 2 && oper != '') {
       evalArr[1] += eventTarget;
     }
+    console.log(oper);
+    console.log(evalArr);
   });
 
 function evaluate (arr, char) {
     screen.empty();
     var num1 = parseInt(arr[0])
     var num2 = parseInt(arr[1])
-    if(char === 'x'){
+    if (num2 != arr[1]){
+      return 'ERROR'
+    }
+    else if(char === 'x'){
       evalPlaceholder = num1 * num2;
     }
     else if(char === '÷'){
@@ -60,23 +65,11 @@ function evaluate (arr, char) {
     else if(char === '-'){
       evalPlaceholder = num1 - num2;
     }
-    else if(char === 'x-'){
-      evalPlaceholder = num1 * num2;
-    }
-    else if(char === '÷-'){
-      evalPlaceholder = num1 / num2;
-    }
-    else if(char === '+-'){
-      evalPlaceholder = num1 + num2;
-    }
-    else if(char === '--'){
-      evalPlaceholder = num1 - num2;
-    }
     else {
-      evalPlaceholder = 'ERROR'
+      return 'ERROR'
     }
     resultShow();
-    return evalPlaceholder
+    return evalPlaceholder.toFixed(5)
   };
 
   function resultShow (){
